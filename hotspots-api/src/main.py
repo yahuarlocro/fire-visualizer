@@ -4,20 +4,24 @@ from fastapi import FastAPI, Depends, UploadFile, File
 from fastapi.responses import JSONResponse
 import os
 from sqlalchemy.orm import Session
-
-from . import crud, models, schemas
-from .database import SessionLocal, engine
+from functools import lru_cache
+from hotspots_api import crud, models, schemas, config
+from hotspots_api.database import SessionLocal, engine
 import json
 from geojson_pydantic import FeatureCollection
 import pandas as pd
 import geopandas as gpd
+from hotspots_api.config import settings
 
 models.Base.metadata.create_all(bind=engine)
 
-rd = redis.Redis(host="localhost", port=6379, db=0)
 
 app = FastAPI()
 
+@lru_cache()
+def get_settings():
+    return config.Settings()
+    
 origins = ['*']
 
 app.add_middleware(
@@ -35,6 +39,9 @@ def get_db():
         yield db
     finally:
         db.close()
+
+# rd = redis.Redis(host="localhost", port=6379, db=0)
+rd = redis.Redis(host=settings.redis_port, port=settings.redis_port, db=0)
 
 
 def make_response_hotspot_properties(hotspot):

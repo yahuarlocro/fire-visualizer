@@ -1,5 +1,5 @@
 #!/bin/bash
-#title           :build_testing.sh
+#title           :build.sh
 #description     :This script fulfills 2 functions:
 #                :1. build docker image locally and sets a new tag for "testing"
 #                :image

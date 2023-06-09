@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    {% include('parts/head.html') %}
+
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+
+
+<body>
+    <div class="container-fluid">
+        <header>
+        <div>
+            <a href="{{url_for('core.home')}}">
+            <img src="{{url_for('static', filename='resources/img/fire.png') }}" alt="" id="navimg"></a>
+            {% block header %}{% endblock %}
+        </div>
+        </header>
+
+        {% if request.path != '/login' %}
+
+        {% include('parts/nav.html') %}
+
+        {% endif %}
+
+        {# <div id="alert"> #}
+        <div id="alert" class="alert" role="alert">
+        </div>
+        {# </div> #}
+        {% for category, mess in get_flashed_messages(with_categories=true)  %}
+
+            {% if category == 'message' %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {% else %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {% endif %}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{mess}}
+                </div>
+        {% endfor %}
+
+        {% block body %}
+        {% endblock %}
+
+        {% include('parts/footer.html') %}
+        {% include('parts/script_footer.html') %}
+        {% include('parts/no_script.html') %}
+    </div>
+</body>
+
+</html>

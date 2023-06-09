@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Fire Visualizer
+
+{% endblock title %}
+
+{% block header %}
+
+<h1>Fire Visualizer</h1>
+
+{% endblock header %}
+
+{% block body %}
+
+<div class="row">
+
+    <section class="col" id="intro">
+        {# <h3>Welcome</h3> #}
+        <p>Search according to dates and map zoom extent (bounding box)</p>
+        <form action="" id="dateRange" method="">
+            <label for="startDate">Select start date:</label>
+            {# <input type="text" name="startDate" id="startDate"> #}
+            <input type="text" name="startDate" id="startDate" value="2023/02/19 00:00">
+            <label for="endDate">Select end date:</label>
+            <input type="text" name="endDate" id="endDate" value="2023/02/21 00:00">
+            {# <input type="text" name="endDate" id="endDate" > #}
+            <label for="searchButton"></label>
+            <input type="submit" id="searchButton" value="Search">
+
+        </form>
+
+    </section>
+</div>
+
+<div class="row">
+
+    <section class="col" id="map-section">
+        {# <h3>Map</h3> #}
+        {#
+        <hr> #}
+        <div id="mapId"></div>
+
+    </section>
+
+</div>
+
+{% endblock body %}

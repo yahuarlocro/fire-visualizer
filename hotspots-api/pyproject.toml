@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "hotspots-api"
+version = "0.1.0"
+description = ""
+authors = ["yahuarlocro <yahuarlocro@tutanota.com>"]
+readme = "README.md"
+packages = [{include = "hotspots_api", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+fastapi = "0.95.2"
+uvicorn = "0.22.0"
+sqlalchemy = "2.0.15"
+geoalchemy2 = "0.13.3"
+psycopg2-binary = "2.9.6"
+geojson-pydantic = "0.6.2"
+python-multipart = "0.0.6"
+geojson = "3.0.1"
+pandas = "2.0.2"
+geopandas = "0.13.0"
+redis = "4.5.5"
+shapely = "2.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

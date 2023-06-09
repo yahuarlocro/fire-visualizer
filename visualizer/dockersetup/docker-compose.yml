@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
   web:
-    container_name: fire_visualizer_testing
-    image: ${IMG_REPO_URL}fire_visualizer:${IMAGE_TAG}
+    container_name: visualizer
+    image: visualizer:${IMAGE_TAG}
     restart: always
     ports:
       - ${PORT}:5000

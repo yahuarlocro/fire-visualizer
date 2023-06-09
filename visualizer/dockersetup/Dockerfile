@@ -13,6 +13,9 @@ EXPOSE 5000
 # create appuser, set home working directory, chage ownership
 RUN useradd -m appuser
 WORKDIR /home/appuser/visualizer
+RUN mkdir /home/appuser/visualizer/logs
+COPY config.py /home/appuser/visualizer/
+COPY main.py /home/appuser/visualizer/
 RUN chown -R appuser:appuser /home/appuser/visualizer
 USER appuser
 ENV PATH=/home/appuser/.local/bin:$PATH
@@ -21,10 +24,11 @@ ENV PATH=/home/appuser/.local/bin:$PATH
 RUN python -m pip install --upgrade pip
 
 # copy from local to container as appuser
-COPY --chown=appuser:appuser visualizer/ .
+# COPY --chown=appuser:appuser visualizer/ .
+COPY --chown=appuser:appuser dist/ ./dist/
 
 # install visualizer with python package
-RUN python -m pip install dist/${WHL_FILENAME}
+RUN python -m pip install ${WHL_FILENAME}
 
 # remove distribution file
 RUN rm -rf dist

@@ -55,10 +55,26 @@ def make_response_hotspot_collection(hotspots, db):
 # @app.get("/hotspots/redis", response_model=schemas.HotspotCollection)
 @app.get("/hotspots/redis") 
 async def read_hotspots_redis():
+    """read entire geojson file (all features in csv file) from redis. I takes around 9 seconds. Issues regarding displaying the data on the docs web ui need to be adressed
+
+    Returns:
+        geojson: full geojson file with all features in database
+    """
     return JSONResponse(json.loads(rd.get('hotspots')))
     
 @app.get("/hotspots/", response_model=schemas.HotspotCollection)
 async def read_hotspots_bbox_time(start_date: str, end_date: str, bounding_box: str, db: Session = Depends(get_db)):
+    """Read hotspots from postgis according to date-time range and a bounding box
+
+    Args:
+        start_date (str): start date as 2023-12-31 00:00:00 format
+        end_date (str): end data as 2023-12-31 00:00:00 format
+        bounding_box (str): geographic coordinates from northeast point followed by southwest. For instace -36.71,-72.21,-36.89,-72.85
+        db (Session, optional): database session. Defaults to Depends(get_db).
+
+    Returns:
+        geojson: feature collection with filtered features
+    """
     db_hotspots = crud.get_hotspots_datetime_bbox(db, start_date=start_date, end_date=end_date, bbox=bounding_box)
     hotspots_feature_collection = make_response_hotspot_collection(db_hotspots, db)
     return hotspots_feature_collection
@@ -66,6 +82,16 @@ async def read_hotspots_bbox_time(start_date: str, end_date: str, bounding_box: 
 
 @app.get("/hotspots/postgis", response_model=schemas.HotspotCollection)
 async def read_hotspots_postgis(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    """reads data from postgis according to limits and skip queries
+
+    Args:
+        skip (int, optional): number of records needed to be skipped. Defaults to 0.
+        limit (int, optional): number of records needed to be displayed. Defaults to 100.
+        db (Session, optional): database session. Defaults to Depends(get_db).
+
+    Returns:
+        _type_: _description_
+    """
     db_hotspots = crud.get_hotspots(db, skip=skip, limit=limit)
     hotspots_feature_collection = make_response_hotspot_collection(db_hotspots, db)
     return hotspots_feature_collection
@@ -73,6 +99,17 @@ async def read_hotspots_postgis(skip: int = 0, limit: int = 100, db: Session = D
 
 @app.post("/hotspots/batch-upload/")
 async def create_batch_hotspots(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    """uploads csv file to postgis database, generates full geojson object and injects it to redis. 
+    Ingestion time depends on amount of data.
+    For a file 84570 records takes around 1,5 minute  
+
+    Args:
+        file (UploadFile, optional): csv file with hotspots. Defaults to File(...).
+        db (Session, optional): database session. Defaults to Depends(get_db).
+
+    Returns:
+        none: success message. Error otherwise
+    """
     features = []
     tmp_file = os.path.join("./", file.filename)
 

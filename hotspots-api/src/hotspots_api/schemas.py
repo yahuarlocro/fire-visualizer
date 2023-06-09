@@ -1,10 +1,8 @@
-from typing import List, Dict
+from typing import List
 from pydantic import BaseModel
 from datetime import datetime
 from geojson_pydantic.features import Feature, FeatureCollection
-from geojson_pydantic.geometries import Point, Geometry
-from geoalchemy2 import Geometry
-# from sqlalchemy import DateTime
+from geojson_pydantic.geometries import Point
 
 # class HotspotBase(BaseModel):
 #     hotspot_id: int
@@ -42,12 +40,3 @@ class HotspotCollection(FeatureCollection):
     
 class HotspotJsonFeatureCollection(BaseModel):
     hotspots: dict
-
-
-# class SearchOptions(BaseModel):
-#     ne_lat: float = -36.53 
-#     ne_lng: float = -72.75
-#     sw_lat: float = -36.70
-#     sw_lng: float = -73.12
-#     start_date: datetime = "2023-02-19T00:00:00"
-#     end_date: datetime = "2023-02-21T00:00:00"

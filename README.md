@@ -70,6 +70,6 @@ docker compose up -d
 6. To access the web app go to http://localhost:5000
 7. To access the REST API go to http://localhost:8000/docs
 
-8. Upload data using the endpoint POST /hotspots/batch-upload. For more information you can check the openapi definitions in (once all services are running) http://localhost:8000/docs#/default/create_batch_hotspots_hotspots_batch_upload__post
+8. Upload data (***input-data.csv***) using the endpoint POST /hotspots/batch-upload. For more information you can check the openapi definitions in (once all services are running) http://localhost:8000/docs#/default/create_batch_hotspots_hotspots_batch_upload__post
 
 >NOTE: this repository is still under development

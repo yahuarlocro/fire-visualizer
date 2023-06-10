@@ -1,0 +1,63 @@
+version: '3.4'
+
+services:
+  visualizer:
+    container_name: hotspots_visualizer
+    image: visualizer:${IMAGE_TAG}
+    restart: always
+    ports:
+      - ${VISUALIZER_PORT}:5000
+      # volumes:
+      # - ./logs:/home/appuser/visualizer/logs
+    environment:
+      - API_URL_BASE=${API_URL_BASE}
+      - SECRET_KEY=${SECRET_KEY}
+    networks:
+      - backend
+    depends_on:
+      - api
+
+  api:
+    container_name: hotspots_api
+    image: hotspots-api:${IMAGE_TAG}
+    restart: always
+    ports:
+      - ${API_PORT}:8000
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PW=${POSTGRES_PW}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+    networks:
+      - backend
+    depends_on:
+      - postgis
+      - redis
+
+  redis:
+    container_name: hotspots_redis
+    image: redis/redis-stack-server:6.2.6-v7
+    restart: always
+    ports:
+      - ${REDIS_PORT}:6379
+    networks:
+      - backend
+
+  postgis:
+    container_name: hotspots_postgis
+    image: postgis/postgis:15-3.3
+    restart: always
+    ports:
+      - ${POSTGRES_PORT}:5432
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - backend
+
+networks:
+  backend:

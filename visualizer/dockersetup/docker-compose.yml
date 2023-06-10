@@ -6,11 +6,11 @@ services:
     image: visualizer:${IMAGE_TAG}
     restart: always
     ports:
-      - ${PORT}:5000
+      - ${VISUALIZER_PORT}:5000
     volumes:
       - ./logs:/home/appuser/visualizer/logs
     environment:
-      - API_URL_BASE=${EXT_API_URL_BASE}
+      - API_URL_BASE=${API_URL_BASE}
       - SECRET_KEY=${SECRET_KEY}
     networks:
       - backend

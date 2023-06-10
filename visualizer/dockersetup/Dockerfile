@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED=1
 
 # expose port and define dis/*.whl variable to pass at build-time to the builder 
 ARG WHL_FILENAME
-EXPOSE 5000
+# EXPOSE 5000
 
 # create appuser, set home working directory, chage ownership
 RUN useradd -m appuser

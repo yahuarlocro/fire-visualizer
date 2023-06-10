@@ -41,7 +41,7 @@ def get_db():
         db.close()
 
 # rd = redis.Redis(host="localhost", port=6379, db=0)
-rd = redis.Redis(host=settings.redis_port, port=settings.redis_port, db=0)
+rd = redis.Redis(host=settings.redis_host, port=settings.redis_port, db=0)
 
 
 def make_response_hotspot_properties(hotspot):

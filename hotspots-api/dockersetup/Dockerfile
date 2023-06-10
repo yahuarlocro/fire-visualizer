@@ -8,8 +8,7 @@ ENV PYTHONUNBUFFERED=1
 
 # expose port and define dis/*.whl variable to pass at build-time to the builder 
 ARG WHL_FILENAME
-EXPOSE 5000
-EXPOSE 5432
+# EXPOSE 8000
 
 # create appuser, set home working directory, chage ownership
 RUN useradd -m appuser
@@ -35,4 +34,4 @@ RUN rm -rf dist
 
 # Web Server Gateway Interface for production deployment
 # CMD ["uvicorn", "--bind", "0.0.0.0:5000", "main:app"]
-CMD ["uvicorn", "main:app"]
+CMD ["uvicorn", "--host", "0.0.0.0", "--port", "8000",  "main:app"]

@@ -6,7 +6,7 @@ services:
     image: hotspots-api:${IMAGE_TAG}
     restart: always
     ports:
-      - ${PORT}:8000
+      - ${API_PORT}:8000
     # volumes:
       # - ./logs:/home/appuser/hotspots-api/logs
     environment:

@@ -16,22 +16,26 @@ $ cd fire-visualizer
 
 First of all clone the reposi
 
-1. update pip and install poetry in your server using pip
+1. create a virutal environment, update pip and install poetry in your server using pip
 
 ```bash
-python -m pip install --upgrade pip
-pip install poetry
+$ virtualenv -p python3.11 venv
+$ source venv/bin/activate
+$ python -m pip install --upgrade pip
+$ pip install poetry
 ```
 
 2. build docker image for hotspots-api
 
 ```bash
-bash hotspots-api/build.sh 
+$ cd hotspots-api
+$ bash build.sh 
 ```
 
 3. build docker image for fire visualizer web app
 ```bash
-bash visualizer/build.sh 
+$ cd ../visualizer
+$ bash build.sh 
 ```
 
 4. once the images are available locally, you can deploy the full application stack. If needed, do adapt the ***.env*** file.  The variables to be adapted are:
@@ -66,5 +70,6 @@ docker compose up -d
 6. To access the web app go to http://localhost:5000
 7. To access the REST API go to http://localhost:8000/docs
 
+8. Upload data using the endpoint POST /hotspots/batch-upload. For more information you can check the openapi definitions in (once all services are running) http://localhost:8000/docs#/default/create_batch_hotspots_hotspots_batch_upload__post
 
 >NOTE: this repository is still under development

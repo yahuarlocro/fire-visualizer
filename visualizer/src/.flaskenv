@@ -2,5 +2,5 @@ FLASK_RUN_PORT=5001
 FLASK_APP=visualizer
 FLASK_DEBUG=1
 
-API_URL_BASE=http://localhost:8000
+API_URL_BASE=http://0.0.0.0:8000
 SECRET_KEY=my-secret-key

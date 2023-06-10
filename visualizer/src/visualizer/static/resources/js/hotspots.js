@@ -69,8 +69,8 @@
             let jsonLayer = L.geoJSON(response, {
                 // jsonLayer = L.geoJSON(response, {
                 pointToLayer: function (feature, latlng) {
-                    return L.circle(latlng, getradius(feature))
-                    // return L.circleMarker(latlng, hotspotMarker)
+                    // return L.circle(latlng, getradius(feature))
+                    return L.circleMarker(latlng, hotspotMarker)
                 },
                 filter: function (feature, layer) {
                     return feature.properties.radius

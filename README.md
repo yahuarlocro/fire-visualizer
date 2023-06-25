@@ -63,6 +63,7 @@ IMAGE_TAG=0.1.0
 
 5. deploy the containers
 ```bash
+cd ..
 docker compose up -d
 ```
 
